@@ -1,0 +1,10 @@
+{
+  "name": "오늘의 밥값",
+  "short_name": "밥값",
+  "description": "집중한 시간만큼 식비 보너스를 쌓는 웹앱",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8EE",
+  "theme_color": "#FF9F43",
+  "icons": []
+}
