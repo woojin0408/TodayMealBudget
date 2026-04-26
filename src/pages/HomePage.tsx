@@ -28,6 +28,7 @@ export function HomePage({ settings, sessions, onNavigate }: HomePageProps) {
         <div>
           <p className="mb-1 text-[13px] font-semibold text-muted">{formatToday()}</p>
           <h1 className="text-[28px] font-black leading-tight tracking-normal text-ink">오늘의 밥값</h1>
+          <p className="mt-1 text-sm font-black text-main">공부한 만큼 먹어라!</p>
         </div>
         <button onClick={() => onNavigate("settings")} className="rounded-2xl bg-white px-3 py-2 text-xl shadow-[0_2px_10px_rgba(0,0,0,0.06)] active:scale-95">
           ⚙️

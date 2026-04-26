@@ -15,7 +15,7 @@ export function AppLayout({ children, currentPage, onNavigate }: AppLayoutProps)
           <div className="mb-8 rounded-[28px] bg-white p-5 shadow-[0_2px_16px_rgba(0,0,0,0.055)]">
             <div className="mb-3 text-3xl">🍽️</div>
             <h1 className="whitespace-nowrap text-2xl font-black leading-tight text-ink">오늘의 밥값</h1>
-            <p className="mt-2 whitespace-nowrap text-sm font-semibold text-muted">집중한 만큼 식비 예산이 커지는 웹앱</p>
+            <p className="mt-2 whitespace-nowrap text-sm font-black text-main">공부한 만큼 먹어라!</p>
           </div>
           <BottomNav currentPage={currentPage} onNavigate={onNavigate} variant="desktop" />
         </aside>

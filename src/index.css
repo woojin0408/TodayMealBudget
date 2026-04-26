@@ -99,20 +99,122 @@ select {
 @keyframes money-fall {
   0% {
     opacity: 0;
-    transform: translate3d(0, -24px, 0) rotate(-12deg) scale(0.9);
+    transform: translate3d(0, -24px, 0) rotate(var(--money-rotate-start, -12deg)) scale(0.9);
   }
   12% {
     opacity: 1;
   }
   100% {
     opacity: 0;
-    transform: translate3d(var(--money-sway, 24px), 420px, 0) rotate(28deg) scale(1.05);
+    transform: translate3d(var(--money-sway, 24px), 420px, 0) rotate(var(--money-rotate-end, 28deg)) scale(1.05);
   }
 }
 
 .money-rain {
   animation: money-fall var(--money-duration, 3.2s) linear infinite;
   animation-delay: var(--money-delay, 0s);
+}
+
+.korean-money {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 8px 10px rgba(120, 84, 32, 0.18));
+  user-select: none;
+}
+
+.korean-money-bill-50000,
+.korean-money-bill-10000 {
+  width: 92px;
+  height: 42px;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  border-radius: 7px;
+  border: 1px solid rgba(70, 88, 62, 0.28);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.korean-money-bill-50000 {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.34), transparent 22%, rgba(255, 255, 255, 0.28) 50%, transparent 78%),
+    repeating-linear-gradient(135deg, rgba(128, 102, 34, 0.12) 0 4px, transparent 4px 9px),
+    linear-gradient(135deg, #f7d875, #eeb95d);
+  color: #6a4c13;
+}
+
+.korean-money-bill-10000 {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.36), transparent 24%, rgba(255, 255, 255, 0.24) 54%, transparent 82%),
+    repeating-linear-gradient(135deg, rgba(32, 112, 82, 0.13) 0 4px, transparent 4px 9px),
+    linear-gradient(135deg, #bfe9c5, #74c995);
+  color: #145f3d;
+}
+
+.korean-money-bank {
+  font-size: 8px;
+  letter-spacing: 0;
+  opacity: 0.72;
+}
+
+.korean-money-amount {
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+.korean-money-label {
+  font-size: 8px;
+  letter-spacing: 0;
+  opacity: 0.72;
+}
+
+.korean-money-coin-500,
+.korean-money-coin-100 {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 2px solid rgba(80, 76, 64, 0.18);
+}
+
+.korean-money-coin-500 {
+  background: radial-gradient(circle at 34% 28%, #ffffff 0 8%, #dedede 24%, #aeb4b8 58%, #7c858a 100%);
+  color: #465057;
+}
+
+.korean-money-coin-100 {
+  background: radial-gradient(circle at 34% 28%, #fff7d7 0 8%, #dcc879 25%, #b8a454 62%, #8f7e3d 100%);
+  color: #56481f;
+}
+
+.korean-money-coin-inner {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.22);
+  font-weight: 900;
+  line-height: 0.9;
+}
+
+.korean-money-coin-inner span {
+  font-size: 13px;
+}
+
+.korean-money-coin-inner small {
+  font-size: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .money-rain {
+    animation: none;
+    opacity: 0.18;
+    transform: translate3d(0, 72px, 0) rotate(var(--money-rotate-start, -12deg));
+  }
 }
 
 input[type="number"]::-webkit-inner-spin-button,
