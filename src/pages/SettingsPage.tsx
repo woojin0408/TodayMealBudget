@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { activities } from "../types/activity";
 import type { AppSettings } from "../types/settings";
 import { AppCard } from "../components/AppCard";
@@ -46,17 +47,36 @@ export function SettingsPage({ settings, setSettings, resetSettings }: SettingsP
 }
 
 function NumberField({ label, value, onChange }: { label: string; value: number; onChange: (value: number) => void }) {
+  const [draft, setDraft] = useState(String(value));
+  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    if (!focused) setDraft(String(value));
+  }, [focused, value]);
+
   return (
     <label className="block">
       <span className="text-sm font-bold whitespace-nowrap text-muted">{label}</span>
       <input
-        type="number"
-        min={0}
-        step={100}
-        value={value}
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        value={draft}
+        onFocus={() => setFocused(true)}
+        onBlur={() => {
+          setFocused(false);
+          if (draft === "") setDraft("0");
+        }}
         onChange={(event) => {
-          if (event.target.value === "") return;
-          const nextValue = Number(event.target.value);
+          const digits = event.target.value.replace(/\D/g, "");
+          if (digits === "") {
+            setDraft("");
+            onChange(0);
+            return;
+          }
+          const nextValue = Number(digits);
+          const normalized = String(nextValue);
+          setDraft(normalized);
           if (Number.isFinite(nextValue)) onChange(Math.max(0, nextValue));
         }}
         className="mt-2 w-full rounded-2xl border border-orange-100 bg-[#FFF8EE] px-4 py-3 text-lg font-black outline-none focus:border-main"

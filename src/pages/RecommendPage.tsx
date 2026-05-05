@@ -32,19 +32,23 @@ const steps: RecommendStep[] = ["meal", "mood", "category", "method", "companion
 export function RecommendPage({ settings, sessions }: RecommendPageProps) {
   const [step, setStep] = useState<RecommendStep>("meal");
   const [mealType, setMealType] = useState<MealType>(() => getInitialMealType());
-  const [moodsValue, setMoodsValue] = useState<MenuMood[]>(["filling"]);
-  const [category, setCategory] = useState<MenuCategory>("korean");
-  const [method, setMethod] = useState<MealMethod>("any");
-  const [companion, setCompanion] = useState<CompanionType>("alone");
-  const [situation, setSituation] = useState<MenuSituation>("workday");
+  const [moodsValue, setMoodsValue] = useState<MenuMood[]>([]);
+  const [category, setCategory] = useState<MenuCategory | null>(null);
+  const [method, setMethod] = useState<MealMethod | null>(null);
+  const [companion, setCompanion] = useState<CompanionType | null>(null);
+  const [situation, setSituation] = useState<MenuSituation | null>(null);
   const [selectedMenuId, setSelectedMenuId] = useState<string | null>(null);
   const [rerollSeed, setRerollSeed] = useState(0);
 
   const budget = getTodayBudgets(settings, sessions);
   const currentBudget = mealType === "lunch" ? budget.lunch : mealType === "dinner" ? budget.dinner : budget.lateNight;
+  const selectedCategory = category ?? "korean";
+  const selectedMethod = method ?? "any";
+  const selectedCompanion = companion ?? "alone";
+  const selectedSituation = situation ?? "workday";
   const recommendations = useMemo(
-    () => recommendMenus(defaultMenus, { budget: currentBudget, moods: moodsValue, category, method, companion, situation, studyRewardPerMinute: settings.rewards.study, rerollSeed }),
-    [category, companion, currentBudget, method, moodsValue, rerollSeed, settings.rewards.study, situation]
+    () => recommendMenus(defaultMenus, { budget: currentBudget, moods: moodsValue, category: selectedCategory, method: selectedMethod, companion: selectedCompanion, situation: selectedSituation, studyRewardPerMinute: settings.rewards.study, rerollSeed }),
+    [currentBudget, moodsValue, rerollSeed, selectedCategory, selectedCompanion, selectedMethod, selectedSituation, settings.rewards.study]
   );
   const currentStepIndex = steps.indexOf(step);
   const selectedRecommendation = recommendations.find((recommendation) => recommendation.item.id === selectedMenuId) ?? null;
@@ -56,6 +60,12 @@ export function RecommendPage({ settings, sessions }: RecommendPageProps) {
 
   function resetFlow() {
     setStep("meal");
+    setMealType(getInitialMealType());
+    setMoodsValue([]);
+    setCategory(null);
+    setMethod(null);
+    setCompanion(null);
+    setSituation(null);
     setSelectedMenuId(null);
   }
 
@@ -119,6 +129,7 @@ export function RecommendPage({ settings, sessions }: RecommendPageProps) {
               <PrimaryButton className="mt-3 w-full" disabled={moodsValue.length === 0} onClick={() => goNext("category")}>
                 다음
               </PrimaryButton>
+              {moodsValue.length === 0 && <p className="mt-2 text-xs font-semibold text-muted">느낌을 하나 이상 골라주세요.</p>}
             </QuestionBlock>
           )}
 
@@ -193,7 +204,7 @@ export function RecommendPage({ settings, sessions }: RecommendPageProps) {
           {step === "result" && (
             <div className="space-y-3">
               <p className="text-sm font-bold leading-relaxed text-muted">
-                {mealLabels[mealType]} · {moodsValue.map((mood) => moodLabels[mood]).join(", ")} · {categoryLabels[category]} · {methodLabels[method]} · {companionLabels[companion]} · {situationLabels[situation]}
+                {mealLabels[mealType]} · {moodsValue.map((mood) => moodLabels[mood]).join(", ")} · {categoryLabels[selectedCategory]} · {methodLabels[selectedMethod]} · {companionLabels[selectedCompanion]} · {situationLabels[selectedSituation]}
               </p>
               <PrimaryButton variant="secondary" className="w-full" onClick={() => setStep("situation")}>
                 마지막 답변 바꾸기

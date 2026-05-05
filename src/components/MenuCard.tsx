@@ -45,7 +45,7 @@ export function MenuCard({ menu, budget, recommendation, rank, selected = false,
           {formatMoney(menu.minPrice)} ~ {formatMoney(menu.maxPrice)}
         </span>
         {typeof leftover === "number" && (
-          <span className={`font-black whitespace-nowrap ${leftover >= 0 ? "text-success" : "text-danger"}`}>
+          <span className={`font-black whitespace-nowrap ${recommendation?.budgetStatus === "range" || leftover >= 0 ? "text-success" : "text-danger"}`}>
             {recommendation?.budgetStatus === "range" ? "최소가 가능" : leftover >= 0 ? "✓ 최대가 가능" : `${formatMoney(recommendation?.missingAmount ?? Math.abs(leftover))} 더 필요`}
           </span>
         )}

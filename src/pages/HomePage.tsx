@@ -23,7 +23,7 @@ export function HomePage({ settings, sessions, onNavigate }: HomePageProps) {
   const animatedBonus = useCountUp(budget.bonus, 600);
 
   return (
-    <div className="slide-in space-y-5 px-5 pt-8 md:px-0 md:pt-0">
+    <div className="slide-in space-y-4 px-5 pt-7 md:space-y-5 md:px-0 md:pt-0">
       <header className="flex items-start justify-between">
         <div>
           <p className="mb-1 text-[13px] font-semibold text-muted">{formatToday()}</p>
@@ -35,45 +35,50 @@ export function HomePage({ settings, sessions, onNavigate }: HomePageProps) {
         </button>
       </header>
 
-      <div className="grid gap-5 xl:grid-cols-2">
-        <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-main to-[#FFB347] px-7 py-7 text-white shadow-[0_12px_32px_rgba(255,159,67,0.38)] md:px-9 md:py-9">
+      <div className="grid gap-3 xl:grid-cols-2 xl:gap-5">
+        <section className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-main to-[#FFB347] px-5 py-5 text-white shadow-[0_12px_32px_rgba(255,159,67,0.32)] md:rounded-[28px] md:px-9 md:py-8 xl:py-7">
           <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-white/10 md:h-64 md:w-64" />
           <div className="absolute -bottom-8 right-8 h-24 w-24 rounded-full bg-white/10 md:h-36 md:w-36" />
           <div className="relative">
-            <p className="mb-1 text-[13px] font-semibold text-white/80 md:text-sm">오늘 점심+저녁+야식 예산</p>
+            <p className="mb-1 text-[13px] font-semibold text-white/80 md:text-sm">오늘 식사 가능 예산</p>
             <div className="mb-3 flex items-end gap-1">
-              <span className="big-num text-[52px] font-black leading-none tracking-normal md:text-[72px]">{animatedTotal.toLocaleString("ko-KR")}</span>
+              <span className="big-num text-[46px] font-black leading-none tracking-normal md:text-[64px]">{animatedTotal.toLocaleString("ko-KR")}</span>
               <span className="pb-1 text-xl font-bold text-white/85 md:text-2xl">원</span>
             </div>
             <div className="flex flex-wrap gap-2">
               <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-bold">기본 합계 {formatMoney(baseTotalBudget)}</span>
-              <span className="rounded-full bg-success/90 px-3 py-1 text-xs font-bold">🎯 공유 보너스 +{formatMoney(animatedBonus)}</span>
+              <span className="rounded-full bg-success/90 px-3 py-1 text-xs font-bold">🎯 획득 보너스 +{formatMoney(animatedBonus)}</span>
             </div>
           </div>
         </section>
 
-        <section className="rounded-[24px] border border-[#C5EDD7] bg-success-light px-5 py-4 md:px-7 md:py-6">
+        <section className="rounded-[22px] border border-[#C5EDD7] bg-success-light px-5 py-4 md:rounded-[24px] md:px-7 md:py-5">
           <div>
             <p className="mb-1 whitespace-nowrap text-xs font-black text-success">✅ 총 식사 가능 예산</p>
-            <p className="big-num whitespace-nowrap text-[28px] font-black text-success md:text-5xl">{formatMoney(totalBudget)}</p>
+            <p className="big-num whitespace-nowrap text-[28px] font-black text-success md:text-4xl">{formatMoney(totalBudget)}</p>
           </div>
-          <div className="mt-5">
+          <div className="mt-3 md:mt-4">
             <p className="mb-1 whitespace-nowrap text-xs text-muted">상태</p>
             <p className="whitespace-nowrap text-sm font-black leading-snug text-ink md:text-base">{getBudgetTierMessage(Math.max(budget.lunch, budget.dinner, budget.lateNight))}</p>
           </div>
         </section>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-        <button onClick={() => onNavigate("focus")} className="rounded-[20px] bg-main p-4 text-left text-white shadow-[0_6px_20px_rgba(255,159,67,0.38)] transition active:scale-[0.96]">
+      <div className="grid grid-cols-3 gap-2 md:gap-3 xl:grid-cols-4">
+        <button onClick={() => onNavigate("focus")} className="rounded-[18px] bg-main p-3 text-left text-white shadow-[0_6px_20px_rgba(255,159,67,0.32)] transition active:scale-[0.96] md:rounded-[20px] md:p-4">
           <span className="text-2xl">⏱️</span>
-          <span className="mt-1 block font-black whitespace-nowrap">집중 시작</span>
-          <span className="mt-1 block text-[11px] font-semibold whitespace-nowrap text-white/75">분마다 보너스 적립</span>
+          <span className="mt-1 block text-sm font-black whitespace-nowrap md:text-base">집중</span>
+          <span className="mt-1 hidden text-[11px] font-semibold whitespace-nowrap text-white/75 md:block">분마다 보너스 적립</span>
         </button>
-        <button onClick={() => onNavigate("recommend")} className="rounded-[20px] border-2 border-line bg-white p-4 text-left text-ink shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition active:scale-[0.96]">
+        <button onClick={() => onNavigate("recommend")} className="rounded-[18px] border-2 border-line bg-white p-3 text-left text-ink shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition active:scale-[0.96] md:rounded-[20px] md:p-4">
           <span className="text-2xl">🎲</span>
-          <span className="mt-1 block font-black whitespace-nowrap">메뉴 추천</span>
-          <span className="mt-1 block text-[11px] font-semibold whitespace-nowrap text-muted">질문 6개로 더 정확하게</span>
+          <span className="mt-1 block text-sm font-black whitespace-nowrap md:text-base">추천</span>
+          <span className="mt-1 hidden text-[11px] font-semibold whitespace-nowrap text-muted md:block">질문 6개로 더 정확하게</span>
+        </button>
+        <button onClick={() => onNavigate("profit")} className="rounded-[18px] border-2 border-line bg-white p-3 text-left text-ink shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition active:scale-[0.96] md:rounded-[20px] md:p-4">
+          <span className="text-2xl">🧮</span>
+          <span className="mt-1 block text-sm font-black whitespace-nowrap md:text-base">몇분치</span>
+          <span className="mt-1 hidden text-[11px] font-semibold whitespace-nowrap text-muted md:block">최저시급으로 계산</span>
         </button>
       </div>
 

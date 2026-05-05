@@ -278,7 +278,7 @@ export function FocusPage({ settings, sessions, onAddSession, onResult, onNaviga
       <AppCard className={`relative overflow-hidden space-y-5 rounded-[28px] p-6 md:p-8 ${status === "running" ? "border-2 border-main" : "border-2 border-transparent"}`}>
         {status === "running" && <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,159,67,0.08)_0%,transparent_70%)]" />}
         {status === "running" && (
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="pointer-events-none absolute right-0 top-0 h-28 w-56 overflow-hidden opacity-20">
             {MONEY_DROPS.map((drop) => (
               <span
                 key={`${drop.left}-${drop.delay}`}

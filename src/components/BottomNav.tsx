@@ -1,10 +1,11 @@
-import { Home, List, Search, Star, Timer } from "lucide-react";
+import { Calculator, Home, List, Search, Star, Timer } from "lucide-react";
 import type { Page } from "../App";
 
 const navItems: { page: Page; label: string; icon: typeof Home }[] = [
   { page: "home", label: "홈", icon: Home },
   { page: "focus", label: "집중", icon: Timer },
   { page: "result", label: "결과", icon: Star },
+  { page: "profit", label: "몇분치", icon: Calculator },
   { page: "recommend", label: "추천", icon: Search },
   { page: "menus", label: "메뉴", icon: List }
 ];
@@ -40,7 +41,7 @@ export function BottomNav({ currentPage, onNavigate, variant = "mobile" }: Botto
   }
 
   return (
-    <nav aria-label="모바일 네비게이션" className="fixed bottom-0 left-1/2 z-20 grid h-[72px] w-full -translate-x-1/2 grid-cols-5 border-t border-black/10 bg-white/90 px-2 pb-[env(safe-area-inset-bottom)] pt-2 backdrop-blur-xl md:hidden">
+    <nav aria-label="모바일 네비게이션" className="fixed bottom-0 left-1/2 z-20 grid h-[72px] w-full -translate-x-1/2 grid-cols-6 border-t border-black/10 bg-white/90 px-2 pb-[env(safe-area-inset-bottom)] pt-2 backdrop-blur-xl md:hidden">
       {navItems.map((item) => {
         const Icon = item.icon;
         const active = currentPage === item.page;
