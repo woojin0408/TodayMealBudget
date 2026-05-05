@@ -19,7 +19,7 @@ export function ActivityButton({ activity, reward, selected, disabled = false, o
     >
       <div className="text-2xl">{activity.emoji}</div>
       <div className="mt-1 text-sm font-black whitespace-nowrap">{activity.label}</div>
-      <div className={`text-[10px] font-semibold whitespace-nowrap ${selected ? "text-white/80" : "text-muted"}`}>분당 {reward.toLocaleString("ko-KR")}원</div>
+      <div className={`text-[10px] font-semibold whitespace-nowrap ${selected ? "text-white/80" : "text-muted"}`}>기준 {reward.toLocaleString("ko-KR")}원/분</div>
     </button>
   );
 }

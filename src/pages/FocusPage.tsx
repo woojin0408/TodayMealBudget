@@ -3,7 +3,7 @@ import type { Page } from "../App";
 import { activities, type ActivityType, type FocusSession } from "../types/activity";
 import type { AppSettings } from "../types/settings";
 import { getMealTypeForDate, getTodayBudgets } from "../services/budgetCalculator";
-import { calculateEarnedBonus, calculateLiveBonus } from "../services/timerUtils";
+import { calculateEarnedBonus, calculateLiveBonus, getRewardStageInfo } from "../services/timerUtils";
 import { formatMoney, formatTimer } from "../utils/format";
 import { mealLabels } from "../types/meal";
 import { ActivityButton } from "../components/ActivityButton";
@@ -94,8 +94,10 @@ export function FocusPage({ settings, sessions, onAddSession, onResult, onNaviga
   const settledBonus = calculateEarnedBonus(displaySeconds, reward);
   const liveBonusText = formatLiveWon(liveBonus, status === "running");
   const liveBonusTextSize = liveBonusText.length > 13 ? "text-[34px] md:text-[56px]" : liveBonusText.length > 10 ? "text-[42px] md:text-[56px]" : "text-[56px]";
-  const rewardPerSecond = reward / 60;
+  const rewardStage = getRewardStageInfo(displaySeconds, reward);
+  const rewardPerSecond = rewardStage.rewardPerMinute / 60;
   const rewardPerSecondLabel = Math.floor(rewardPerSecond * 100) / 100;
+  const rewardMultiplierLabel = rewardStage.multiplier.toLocaleString("ko-KR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const currentMealType = getMealTypeForDate(new Date());
   const currentMealBudget = currentMealType === "lunch" ? todayBudget.lunch : currentMealType === "dinner" ? todayBudget.dinner : todayBudget.lateNight;
 
@@ -341,7 +343,8 @@ export function FocusPage({ settings, sessions, onAddSession, onResult, onNaviga
         </div>
 
         <p className="relative z-10 text-xs font-medium leading-relaxed text-muted">
-          초당 {rewardPerSecondLabel.toLocaleString("ko-KR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}원씩 실시간 적립 · 분당 {reward.toLocaleString("ko-KR")}원
+          현재 {rewardMultiplierLabel}배 구간 · 초당 {rewardPerSecondLabel.toLocaleString("ko-KR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}원씩 실시간 적립 · 기준 분당 {reward.toLocaleString("ko-KR")}원
+          {rewardStage.nextMilestoneMinutes !== null ? ` · ${rewardStage.nextMilestoneMinutes}분부터 가속` : " · 2시간 이후 최고 가속"}
           {selectedActivity === "coding" ? " · 코딩은 탭 전환 예외" : ""}
         </p>
 

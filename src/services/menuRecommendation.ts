@@ -1,5 +1,6 @@
 import type { CompanionType, MenuCategory, MenuItem, MenuMood, MenuSituation } from "../types/menu";
 import { categoryLabels, companionLabels, moodLabels, situationLabels } from "../types/menu";
+import { estimateMinutesForBonus } from "./timerUtils";
 
 export type MealMethod = "any" | "eatOut" | "delivery" | "takeout" | "convenience";
 
@@ -48,7 +49,7 @@ export function recommendMenus(menus: MenuItem[], input: RecommendationInput): M
       const budgetStatus: BudgetStatus = input.budget >= item.maxPrice ? "affordable" : input.budget >= item.minPrice ? "range" : "over";
       const isOverBudget = budgetStatus === "over";
       const missingAmount = Math.max(0, item.minPrice - input.budget);
-      const studyMinutesToAfford = Math.ceil(missingAmount / studyRewardPerMinute);
+      const studyMinutesToAfford = estimateMinutesForBonus(missingAmount, studyRewardPerMinute);
       const usesBudgetWell = item.maxPrice >= input.budget * 0.7 && item.maxPrice <= input.budget * 0.95;
       const matchesCategory = item.category === input.category;
       const similarCategoryScore = getSimilarCategoryScore(input.category, item.category);

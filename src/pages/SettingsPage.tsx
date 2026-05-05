@@ -31,7 +31,7 @@ export function SettingsPage({ settings, setSettings, resetSettings }: SettingsP
         {activities.map((activity) => (
           <NumberField
             key={activity.type}
-            label={`${activity.emoji} ${activity.label} 분당 보너스`}
+            label={`${activity.emoji} ${activity.label} 기준 분당 보너스`}
             value={settings.rewards[activity.type]}
             onChange={(value) => setSettings({ ...settings, rewards: { ...settings.rewards, [activity.type]: value } })}
           />
